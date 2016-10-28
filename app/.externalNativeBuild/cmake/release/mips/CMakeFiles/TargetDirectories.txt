@@ -1,0 +1,3 @@
+/home/romain/reps/midiHackathon/app/.externalNativeBuild/cmake/release/mips/CMakeFiles/edit_cache.dir
+/home/romain/reps/midiHackathon/app/.externalNativeBuild/cmake/release/mips/CMakeFiles/rebuild_cache.dir
+/home/romain/reps/midiHackathon/app/.externalNativeBuild/cmake/release/mips/CMakeFiles/dsp_faust.dir

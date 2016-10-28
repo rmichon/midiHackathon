@@ -1,0 +1,44 @@
+
+{
+	"buildFiles" : [ "/home/romain/reps/midiHackathon/app/CMakeLists.txt" ],
+	"cleanCommands" : 
+	[
+		"/home/romain/Android/Sdk/cmake/3.6.3155560/bin/cmake --build /home/romain/reps/midiHackathon/app/.externalNativeBuild/cmake/debug/mips64 --target clean"
+	],
+	"cppFileExtensions" : [ "cpp" ],
+	"libraries" : 
+	{
+		"dsp_faust-Debug-mips64" : 
+		{
+			"abi" : "mips64",
+			"artifactName" : "dsp_faust",
+			"buildCommand" : "/home/romain/Android/Sdk/cmake/3.6.3155560/bin/cmake --build /home/romain/reps/midiHackathon/app/.externalNativeBuild/cmake/debug/mips64 --target dsp_faust",
+			"buildType" : "debug",
+			"files" : 
+			[
+				
+				{
+					"flags" : "  -target mips64el-none-linux-android -gcc-toolchain /home/romain/Android/Sdk/ndk-bundle/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64 --sysroot=/home/romain/Android/Sdk/ndk-bundle/platforms/android-23/arch-mips64  -Ddsp_faust_EXPORTS -isystem /home/romain/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /home/romain/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/mips64/include -isystem /home/romain/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security -fno-exceptions -fno-rtti -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security -fno-exceptions -fno-rtti -O3 -fexceptions -frtti -lOpenSLES -O0 -fno-limit-debug-info -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "/home/romain/reps/midiHackathon/app/src/main/cpp/java_interface_wrap.cpp",
+					"workingDirectory" : "/home/romain/reps/midiHackathon/app/.externalNativeBuild/cmake/debug/mips64"
+				},
+				
+				{
+					"flags" : "  -target mips64el-none-linux-android -gcc-toolchain /home/romain/Android/Sdk/ndk-bundle/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64 --sysroot=/home/romain/Android/Sdk/ndk-bundle/platforms/android-23/arch-mips64  -Ddsp_faust_EXPORTS -isystem /home/romain/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /home/romain/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/mips64/include -isystem /home/romain/Android/Sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security -fno-exceptions -fno-rtti -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security -fno-exceptions -fno-rtti -O3 -fexceptions -frtti -lOpenSLES -O0 -fno-limit-debug-info -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "/home/romain/reps/midiHackathon/app/src/main/cpp/dsp_faust.cpp",
+					"workingDirectory" : "/home/romain/reps/midiHackathon/app/.externalNativeBuild/cmake/debug/mips64"
+				}
+			],
+			"output" : "/home/romain/reps/midiHackathon/app/build/intermediates/cmake/debug/obj/mips64/libdsp_faust.so",
+			"toolchain" : "11126000236708351749"
+		}
+	},
+	"toolchains" : 
+	{
+		"11126000236708351749" : 
+		{
+			"cCompilerExecutable" : "/home/romain/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang",
+			"cppCompilerExecutable" : "/home/romain/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++"
+		}
+	}
+}
