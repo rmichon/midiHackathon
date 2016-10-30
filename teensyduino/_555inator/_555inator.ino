@@ -6,8 +6,8 @@
 int IRQPIN = 2;
 #define INPUT_COUNT (8)
 #define ledPin (13)      // select the pin for the LED
-#define TOUCH_THRESHOLD       (5)
-#define PIEZO_THRESHOLD       (100)
+#define TOUCH_THRESHOLD       (2)
+#define PIEZO_THRESHOLD       (1)
 #define triggerThreshold 5
 #define initialHitReadDuration 200
 #define midiVelocityScaleDownAmount 2
@@ -28,6 +28,7 @@ boolean gPrevTouchStates[INPUT_COUNT];
 boolean gTouchStates[INPUT_COUNT];
 int gPiezoValue = 0;
 int gPrevPiezoValue = 0;
+int gPiezoMax = 0;
 
 boolean checkInterrupt( void )
 {
@@ -124,7 +125,7 @@ void readTouchInputs( void )
 {
   int i;
   // if (!checkInterrupt() ) {
-    // uint16_t touched = 0;
+    uint16_t touched = 0;
       
     // MPR TOUCH COMMS
     // ---------------
@@ -134,9 +135,9 @@ void readTouchInputs( void )
     byte LSB = Wire.read();
     byte MSB = Wire.read();
       
-    // touched = ((MSB << 8) | LSB); //16bits that make up the touch states
+    touched = ((MSB << 8) | LSB); //16bits that make up the touch states
   
-    // if ( touched ) {
+    if ( touched ) {
       Wire.beginTransmission(0x5A);
       Wire.send( 0x04 );   
       Wire.endTransmission();
@@ -161,7 +162,7 @@ void readTouchInputs( void )
           gTouchStates[i] = false;
         }
       } // for ( i = ...
-      // } // if ( touched )
+    } // if ( touched )
   // } // if ( !checkInterrupt() )  
 } // void readTouchInputs()
 
@@ -192,9 +193,16 @@ void readPiezoInput( void ) {
  
   // Read the piezo
   uint16_t value = analogRead(inputPin);
-  gPiezoValue = value;
+  gPiezoValue = value * 40;
+  if (gPiezoValue > 127) {
+    gPiezoValue = 127;
+  }
   if (gPrevPiezoValue != gPiezoValue) {
-    if (gPiezoValue > 100) {
+    if (gPiezoValue > gPiezoMax) {
+        gPiezoMax = gPiezoValue;  
+    }
+    
+    if (gPiezoValue > 10) {
       // Serial.print("...Piezo changes to: ");
       // Serial.println(gPiezoValue);
     }
@@ -238,16 +246,17 @@ void generateMidi()
   int i;
   for (i = 0; i < INPUT_COUNT; ++i) {
     if (gTouchStates[i] != gPrevTouchStates[i]) {
-      if (gPiezoValue > 0) {
+      if (gTouchStates[i]) {
           // Send the midi CC event.
           usbMIDI.sendControlChange(
                     CC_BASE + i,
-                    gPiezoValue,
+                    80 + gPiezoValue,
                     0 );
-          Serial.print("----> HIT VALUE of key ");
-          Serial.print(i);
-          Serial.print(" is ");
-          Serial.println(gPiezoValue);
+          // Serial.print("----> HIT VALUE of key ");
+          // Serial.print(i);
+          // Serial.print(" is ");
+          // Serial.println(gPiezoValue);
+          gPiezoMax = 0;
       }
       else {
           // Send the midi CC event.
@@ -255,10 +264,10 @@ void generateMidi()
                     CC_BASE + i,
                     0,
                     0 );
-          Serial.print("----> DAMP VALUE of key ");
-          Serial.print(i);
-          Serial.print(" is ");
-          Serial.println(gPiezoValue);
+          // Serial.print("----> DAMP VALUE of key ");
+          // Serial.print(i);
+          // Serial.print(" is ");
+          // Serial.println(gPiezoValue);
       }
       gPrevTouchStates[i] = gTouchStates[i];
     }
@@ -274,7 +283,7 @@ boolean timeGreaterOrEqual(uint32_t lhs, uint32_t rhs) {
 void setup() {
   int i;
 
-  Serial.print("I'M ALIVE!");
+  // Serial.print("I'M ALIVE!");
   // put your setup code here, to run once:
   pinMode(IRQPIN, INPUT);
   digitalWrite(IRQPIN, HIGH); //enable pullup resistor
@@ -297,7 +306,7 @@ void loop() {
   readTouchInputs();
   readPiezoInput();
   generateMidi();
-  delay(25);
+  delay(10);
 }
 
 
