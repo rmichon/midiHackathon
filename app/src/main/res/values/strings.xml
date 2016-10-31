@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">FaustInstrument</string>
+    <string-array name="scale_array">
+        <item>Major</item>
+        <item>Harmonic Minor</item>
+        <item>Whole Tone</item>
+        <item>Pentatonic</item>
+        <item>Modified Pentatonic</item>
+        <item>Minor Pentatonic</item>
+        <item>Modified Minor Pentatonic</item>
+        <item>Octatonic</item>
+        <item>Hungarian</item>
+        <item>Double Harmonic</item>
+    </string-array>
 </resources>

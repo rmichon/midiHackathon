@@ -1,6 +1,10 @@
 package com.example.romain.faustinstrument;
 
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.midi.MidiDevice;
 import android.media.midi.MidiDeviceInfo;
 import android.media.midi.MidiManager;
@@ -11,10 +15,18 @@ import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.dsp_faust.dsp_faust;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener, AdapterView.OnItemSelectedListener {
+
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +37,18 @@ public class MainActivity extends AppCompatActivity {
         int blockSize = 128;
         dsp_faust.init(SR,blockSize);
         dsp_faust.start();
-        dsp_faust.setParamValue("/synth/gate",1);
 
-        /*
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.scale_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
         class MyReceiver extends MidiReceiver {
             public void onSend(byte[] data, int offset,
                                int count, long timestamp) {
@@ -85,7 +106,44 @@ public class MainActivity extends AppCompatActivity {
                 }, new Handler(Looper.getMainLooper()));
             }
         }, new Handler(Looper.getMainLooper()));
-        */
+
+
+
+    }
+
+    public boolean onTouchEvent(MotionEvent event)  {
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            Log.d("Event", "Action Dowm");
+            return true;
+        }
+
+        if(event.getAction()== MotionEvent.ACTION_MOVE){
+            dsp_faust.setParamValue("/0x00/t60",event.getY()/2600*5);
+            return true;
+
+        }
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        for (int i = 0 ;i<event.values.length;i++){
+            dsp_faust.propagateAcc(i, event.values[i]);
+        }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+        Log.d("Checkbox", " " + position);
+        dsp_faust.setParamValue("/0x00/scale", position);
+
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
     }
 
     @Override
