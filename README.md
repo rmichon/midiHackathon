@@ -1,6 +1,6 @@
 # Google MIDI Hackathon
 
-The Google MIDI Hackathon took place at the Google MTV campus on Oct. 28/29, 2016. Our team (Megan Jurek, Juan Sierra, Prateek Murgai, Wayne Jackson, Romain Michon, Albert [...] and Riz [...]) made an unnamed instrument that can best be described as an "Android mobile phone augmented as a Kalimba sounding like Christmas bells", fruit of the "yes and" design thinking approach.
+The Google MIDI Hackathon took place at the Google MTV campus on Oct. 28/29, 2016. Our team (Megan Jurek, Juan Sierra, Prateek Murgai, Wayne Jackson, Romain Michon, Albert Lekstutis and Riz Riz) made an unnamed instrument that can best be described as an "Android mobile phone augmented as a Kalimba sounding like Christmas bells", fruit of the "yes and" design thinking approach.
 
 The physical interface of our instrument was made with a [Teensy](https://www.pjrc.com/teensy/) board and uses capacitive touch sensing. Sounds are generated using a modal physical model implemented in [Faust](http://faust.grame.fr). [faust2api](https://ccrma.stanford.edu/~rmichon/faust2api/) was used to make the audio portion of the app. 
 
